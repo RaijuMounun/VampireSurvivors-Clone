@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;
 
 
-    private void Awake()
+    private void Start()
     {
         Speed = PlayerStats.Instance.Speed;
     }
@@ -19,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
         GetAxises();
         SetMovement();
         Move();
-
-        print(Speed);
     }
 
     void GetAxises()
