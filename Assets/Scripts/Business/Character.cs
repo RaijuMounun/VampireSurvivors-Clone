@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -9,14 +7,9 @@ public class Character : MonoBehaviour
     public int Damage { get; set; }
     public bool IsAlive { get; set; }
 
-    private void Awake()
-    {
-        Health = playerStats.Health;
-        Damage = playerStats.Damage;
-
-    }
     void Start()
     {
+        Health = playerStats.Health;
         IsAlive = true;
     }
 
