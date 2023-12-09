@@ -1,8 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+//TODO firingi yap top mop bişey atsın, reload yap
+
+
 public class Minigun : BaseGun, IWeapon
 {
+    private Coroutine firingCoroutine;
+
+
+
     [Header("Minigun Stats")]
     [SerializeField] float spinUpTime = 2f;
 
@@ -14,13 +21,12 @@ public class Minigun : BaseGun, IWeapon
 
 
 
-    private Coroutine firingCoroutine;
 
 
 
     private void Awake()
     {
-        SetUpStats();
+        SetUpStats(damage, range, fireRate, ammo, reloadTime, isReloading, isFiring, isEquipped, isBought);
     }
 
     void Update()
@@ -29,21 +35,6 @@ public class Minigun : BaseGun, IWeapon
         IsFireButtonUp();
     }
 
-
-
-
-    void SetUpStats()
-    {
-        Damage = damage;
-        Range = range;
-        FireRate = fireRate;
-        Ammo = ammo;
-        ReloadTime = reloadTime;
-        IsReloading = false;
-        IsFiring = false;
-        IsEquipped = false;
-        IsBought = false;
-    }
 
     void IsFireButtonDown()
     {
