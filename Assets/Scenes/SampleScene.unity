@@ -696,7 +696,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Speed: 10
-  Damage: 10
   IsAlive: 1
 --- !u!1 &2060524235
 GameObject:
