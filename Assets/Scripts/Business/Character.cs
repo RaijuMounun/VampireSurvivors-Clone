@@ -1,15 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    PlayerStats playerStats = PlayerStats.Instance;
     public int Health { get; set; }
     public int Damage { get; set; }
     public bool IsAlive { get; set; }
 
     void Start()
     {
-        Health = playerStats.Health;
         IsAlive = true;
     }
 

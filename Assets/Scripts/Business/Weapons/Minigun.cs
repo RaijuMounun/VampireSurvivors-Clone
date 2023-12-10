@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-//TODO firingi yap top mop bişey atsın, reload yap
+//TODO reload yap
 
 
 public class Minigun : BaseGun, IWeapon
@@ -20,11 +20,7 @@ public class Minigun : BaseGun, IWeapon
     [SerializeField] bool isReloading, isFiring, isEquipped, isBought;
 
 
-
-
-
-
-    private void Awake()
+    private void Start()
     {
         SetUpStats(damage, range, fireRate, bulletSpeed, ammo, reloadTime, isReloading, isFiring, isEquipped, isBought);
     }
@@ -35,7 +31,7 @@ public class Minigun : BaseGun, IWeapon
         if (Input.GetButtonUp("Fire1")) IsFireButtonUp();
     }
 
-
+    #region Fire Button Methods
     void IsFireButtonDown()
     {
         IsFiring = true;
@@ -48,7 +44,9 @@ public class Minigun : BaseGun, IWeapon
         StopCoroutine(firingCoroutine);
         firingCoroutine = null;
     }
+    #endregion
 
+    #region Firing Methods
     IEnumerator FireAfterDelay()
     {
         yield return new WaitForSeconds(spinUpTime);
@@ -71,5 +69,6 @@ public class Minigun : BaseGun, IWeapon
         ammo--;
         BulletManager.Instance.FireBullet();
     }
+    #endregion
 
 }

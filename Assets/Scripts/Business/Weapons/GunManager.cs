@@ -12,7 +12,6 @@ public class GunManager : PersistentSingleton<GunManager>
     [Header("Gun GameObjects")]
     [SerializeField] Minigun minigun;
 
-
     protected override void Awake()
     {
         base.Awake();

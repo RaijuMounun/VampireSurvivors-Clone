@@ -11,18 +11,19 @@ public class Bullet : MonoBehaviour
     public float speed;
 
 
+    public Vector3 direction;
+
+
 
     private void OnEnable()
     {
-        StartCoroutine(DisableAfterDelay());
-
-        if (GunManager.Instance.activeGun != null)
-            gun = GunManager.Instance.activeGun;
-
-        if (gun == null) return;
+        gun = GunManager.Instance.activeGun;
         lifeTime = gun.BulletLifeTime;
         damage = gun.Damage;
         speed = gun.BulletSpeed;
+
+        StartCoroutine(DisableAfterDelay());
+
     }
 
     IEnumerator DisableAfterDelay()
@@ -35,12 +36,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.GetType() == typeof(BaseEnemy))
         {
             //collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage); //TODO enemy scripti yaz
+            BulletManager.Instance.ReturnBullet(gameObject);
         }
-        BulletManager.Instance.ReturnBullet(gameObject);
     }
 
-    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward);
+    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward, Space.Self);
+
 }

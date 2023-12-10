@@ -10,8 +10,6 @@ public class BulletManager : PersistentSingleton<BulletManager>
 
 
     PlayerMovement player;
-
-    Queue<GameObject> bulletPool;
     public List<GameObject> bulletPool2 = new();
     int bulletCounter = 0;
 
@@ -19,7 +17,12 @@ public class BulletManager : PersistentSingleton<BulletManager>
     private void Start()
     {
         player = PlayerMovement.Instance;
-        bulletPool = new Queue<GameObject>(bulletPoolSize);
+        StartCoroutine(Delay(1f));
+    }
+
+    IEnumerator Delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         MakePool();
     }
 
@@ -30,47 +33,37 @@ public class BulletManager : PersistentSingleton<BulletManager>
             GameObject bullet = Instantiate(bulletPrefab, bulletParent);
             bullet.SetActive(false);
             bulletPool2.Add(bullet);
-            bulletPool.Enqueue(bullet);
         }
-    }
-
-    public GameObject GetBullet()
-    {
-        if (bulletPool.Count <= 0)
-        {
-            MakePool();
-            return GetBullet();
-        }
-
-        GameObject bullet = bulletPool.Dequeue();
-        bullet.SetActive(true);
-        return bullet;
     }
 
     public void ReturnBullet(GameObject bullet)
     {
         bullet.SetActive(false);
-        bulletPool.Enqueue(bullet);
     }
 
 
     public void FireBullet()
     {
-        if (bulletPool.Count <= 0)
+        if (bulletPool2.Count <= 0)
         {
             MakePool();
             FireBullet();
             return;
         }
 
+        GoLittleBullet();
+    }
+
+
+    void GoLittleBullet()
+    {
         GameObject bullet = bulletPool2[bulletCounter];
         bulletCounter++;
         if (bulletCounter >= bulletPoolSize) bulletCounter = 0;
         bullet.transform.position = player.transform.position;
-        bullet.transform.LookAt(player.worldPos);
+        bullet.transform.localRotation = player.transform.rotation;
         bullet.SetActive(true);
     }
-
 
 
 }
