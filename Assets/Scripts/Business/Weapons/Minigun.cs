@@ -16,7 +16,7 @@ public class Minigun : BaseGun, IWeapon
 
     //This area is for serializing fields to control from the inspector
     [SerializeField] int damage = 10, ammo = 100;
-    [SerializeField] float range = 20f, fireRate = 0.2f, reloadTime = 2f, bulletSpeed = 20f;
+    [SerializeField] float range = 20f, fireRate = 0.2f, reloadTime = 2f, bulletSpeed = 2f;
     [SerializeField] bool isReloading, isFiring, isEquipped, isBought;
 
 
@@ -69,7 +69,7 @@ public class Minigun : BaseGun, IWeapon
 
         print("FIRING FIRING FIRING PEW PEW PEW!!!!");
         ammo--;
-
+        BulletManager.Instance.FireBullet();
     }
 
 }
