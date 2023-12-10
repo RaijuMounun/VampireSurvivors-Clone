@@ -64,8 +64,6 @@ public class Minigun : BaseGun, IWeapon
             IsFireButtonUp();
             return;
         }
-
-        print("FIRING FIRING FIRING PEW PEW PEW!!!!");
         ammo--;
         BulletManager.Instance.FireBullet();
     }
