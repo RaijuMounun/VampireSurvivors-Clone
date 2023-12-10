@@ -5,6 +5,7 @@ public class BaseGun : MonoBehaviour
     public int Damage { get; set; }
     public float Range { get; set; }
     public float FireRate { get; set; }
+    public float BulletSpeed { get; set; }
     public int Ammo { get; set; }
     public float ReloadTime { get; set; }
     public bool IsReloading { get; set; }
@@ -15,11 +16,12 @@ public class BaseGun : MonoBehaviour
 
 
 
-    protected void SetUpStats(int damage, float range, float fireRate, int ammo, float reloadTime, bool isReloading, bool isFiring, bool isEquipped, bool isBought)
+    protected void SetUpStats(int damage, float range, float fireRate, float bulletSpeed, int ammo, float reloadTime, bool isReloading, bool isFiring, bool isEquipped, bool isBought)
     {
         Damage = damage;
         Range = range;
         FireRate = fireRate;
+        BulletSpeed = bulletSpeed;
         Ammo = ammo;
         ReloadTime = reloadTime;
         IsReloading = isReloading;

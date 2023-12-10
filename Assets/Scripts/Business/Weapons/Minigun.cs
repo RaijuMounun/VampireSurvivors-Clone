@@ -16,7 +16,7 @@ public class Minigun : BaseGun, IWeapon
 
     //This area is for serializing fields to control from the inspector
     [SerializeField] int damage = 10, ammo = 100;
-    [SerializeField] float range = 20f, fireRate = 0.2f, reloadTime = 2f;
+    [SerializeField] float range = 20f, fireRate = 0.2f, reloadTime = 2f, bulletSpeed = 20f;
     [SerializeField] bool isReloading, isFiring, isEquipped, isBought;
 
 
@@ -26,25 +26,23 @@ public class Minigun : BaseGun, IWeapon
 
     private void Awake()
     {
-        SetUpStats(damage, range, fireRate, ammo, reloadTime, isReloading, isFiring, isEquipped, isBought);
+        SetUpStats(damage, range, fireRate, bulletSpeed, ammo, reloadTime, isReloading, isFiring, isEquipped, isBought);
     }
 
     void Update()
     {
-        IsFireButtonDown();
-        IsFireButtonUp();
+        if (Input.GetButtonDown("Fire1")) IsFireButtonDown();
+        if (Input.GetButtonUp("Fire1")) IsFireButtonUp();
     }
 
 
     void IsFireButtonDown()
     {
-        if (!Input.GetButtonDown("Fire1")) return;
         IsFiring = true;
         firingCoroutine ??= StartCoroutine(FireAfterDelay());
     }
     void IsFireButtonUp()
     {
-        if (!Input.GetButtonUp("Fire1")) return;
         IsFiring = false;
         if (firingCoroutine == null) return;
         StopCoroutine(firingCoroutine);
@@ -63,7 +61,15 @@ public class Minigun : BaseGun, IWeapon
 
     public void Fire()
     {
+        if (ammo <= 0)
+        {
+            IsFireButtonUp();
+            return;
+        }
+
         print("FIRING FIRING FIRING PEW PEW PEW!!!!");
+        ammo--;
+
     }
 
 }
