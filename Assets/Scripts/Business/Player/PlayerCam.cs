@@ -8,6 +8,8 @@ public class PlayerCam : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
 
+    private void Awake() => target = PlayerMovement.Instance.transform;
+
     void LateUpdate()
     {
         CamMovement();

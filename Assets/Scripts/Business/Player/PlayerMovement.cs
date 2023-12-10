@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : PersistentSingleton<PlayerMovement>
 {
     public int Speed { get; set; }
 
@@ -9,7 +9,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;
 
 
-    private void Awake()
+    Vector3 mousePos;
+    public Vector3 worldPos;
+
+
+    private void Start()
     {
         Speed = PlayerStats.Instance.Speed;
     }
@@ -19,8 +23,7 @@ public class PlayerMovement : MonoBehaviour
         GetAxises();
         SetMovement();
         Move();
-
-        print(Speed);
+        Rotate();
     }
 
     void GetAxises()
@@ -36,6 +39,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        transform.position += movement * Speed * Time.deltaTime;
+        transform.position += Speed * Time.deltaTime * movement;
+    }
+
+    void Rotate()
+    {
+        mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.transform.position.y - transform.position.y;
+        worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldPos.y = transform.position.y;
+        transform.LookAt(worldPos);
     }
 }
