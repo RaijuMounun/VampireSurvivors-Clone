@@ -11,8 +11,6 @@ public class Bullet : MonoBehaviour
     public float speed;
 
 
-    public Vector3 direction;
-
 
 
     private void OnEnable()
@@ -36,13 +34,15 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.GetType() == typeof(BaseEnemy))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             //collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage); //TODO enemy scripti yaz
+            BaseEnemy enemySc = collision.gameObject.GetComponent<BaseEnemy>();
+            enemySc.TakeDamage(damage);
             BulletManager.Instance.ReturnBullet(gameObject);
         }
     }
 
-    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward, Space.Self);
+    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward, Space.World);
 
 }
