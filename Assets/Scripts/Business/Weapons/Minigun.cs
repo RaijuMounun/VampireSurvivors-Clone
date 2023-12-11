@@ -29,11 +29,13 @@ public class Minigun : BaseGun, IWeapon
     {
         if (Input.GetButtonDown("Fire1")) IsFireButtonDown();
         if (Input.GetButtonUp("Fire1")) IsFireButtonUp();
+        if (Input.GetKeyDown(KeyCode.R)) Reload();
     }
 
     #region Fire Button Methods
     void IsFireButtonDown()
     {
+        if (isReloading) return;
         IsFiring = true;
         firingCoroutine ??= StartCoroutine(FireAfterDelay());
     }
@@ -68,5 +70,24 @@ public class Minigun : BaseGun, IWeapon
         BulletManager.Instance.FireBullet();
     }
     #endregion
+
+    #region Reloading Methods
+    public void Reload()
+    {
+        if (ammo == Ammo) return;
+        IsReloading = true;
+        StartCoroutine(ReloadAfterDelay());
+    }
+
+    IEnumerator ReloadAfterDelay()
+    {
+        yield return new WaitForSeconds(ReloadTime);
+        ammo = Ammo;
+        IsReloading = false;
+    }
+    #endregion
+
+
+
 
 }

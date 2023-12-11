@@ -62,7 +62,6 @@ Mammon: evil genies – tempters and ensnarers
 
 public class BaseEnemy : Character
 {
-    //
     public EnemyStats enemyStats;
     public Transform player;
     public Rigidbody rb;

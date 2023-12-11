@@ -34,4 +34,5 @@ public class BaseGun : MonoBehaviour
 public interface IWeapon
 {
     void Fire();
+    void Reload();
 }
