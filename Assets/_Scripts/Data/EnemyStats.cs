@@ -17,4 +17,5 @@ public class EnemyStats : PersistentSingleton<EnemyStats>
     public int alectoSpeed = 5;
     public float alectoKnockbackForce = 10f;
 
+
 }

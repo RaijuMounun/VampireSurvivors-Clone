@@ -59,7 +59,7 @@ Mammon: evil genies – tempters and ensnarers
 
 
 
-public class BaseEnemy : Character
+public class BaseEnemy : Character, IEnemy
 {
     public EnemyStats enemyStats;
     public Transform player;
@@ -107,10 +107,10 @@ public class BaseEnemy : Character
 
     private void OnCollisionEnter(Collision collision)
     {
-        TouchPlayer(collision);
+        Attack(collision);
     }
 
-    void Move()
+    public void Move()
     {
         if (!isAlive) return;
         // Move towards the player
@@ -118,7 +118,7 @@ public class BaseEnemy : Character
         rb.MovePosition(transform.position + speed * Time.deltaTime * direction);
     }
 
-    void TouchPlayer(Collision collision)
+    public void Attack(Collision collision)
     {
         if (!isAlive || !collision.gameObject.CompareTag("Player")) return;
         // Apply knockback
@@ -155,5 +155,5 @@ interface IEnemy
     void Move();
     void TakeDamage(int damage);
     void CheckDeath();
-    void Attack();
+    void Attack(Collision collision);
 }
