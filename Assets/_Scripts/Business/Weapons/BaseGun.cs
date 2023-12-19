@@ -39,7 +39,7 @@ public class BaseGun : MonoBehaviour, IWeapon
         FiringCoroutine = firingCoroutine;
     }
 
-    public void StartFire() { }
+    public virtual void StartFire() { }
     public void Reload() { }
 }
 

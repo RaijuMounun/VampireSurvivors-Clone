@@ -10,21 +10,11 @@ public class BulletManager : PersistentSingleton<BulletManager>
 
 
     PlayerMovement player;
-    public List<GameObject> bulletPool2 = new();
+    public List<GameObject> bulletPool = new();
     int bulletCounter = 0;
 
     protected override void Awake() => base.Awake();
-    private void Start()
-    {
-        player = PlayerMovement.Instance;
-        StartCoroutine(Delay(1f));
-    }
-
-    IEnumerator Delay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        MakePool();
-    }
+    private void Start() => player = PlayerMovement.Instance;
 
     void MakePool()
     {
@@ -32,32 +22,31 @@ public class BulletManager : PersistentSingleton<BulletManager>
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletParent);
             bullet.SetActive(false);
-            bulletPool2.Add(bullet);
+            bulletPool.Add(bullet);
         }
     }
 
-    public void ReturnBullet(GameObject bullet)
-    {
-        bullet.SetActive(false);
-    }
+    public void ReturnBullet(GameObject bullet) => bullet.SetActive(false);
 
 
     public void FireBullet()
     {
-        if (bulletPool2.Count <= 0)
-        {
-            MakePool();
-            FireBullet();
-            return;
-        }
-
+        IfAmmoOut();
         GoLittleBullet();
+    }
+
+
+    void IfAmmoOut()
+    {
+        if (bulletPool.Count > 0) return;
+        MakePool();
+        FireBullet();
     }
 
 
     void GoLittleBullet()
     {
-        GameObject bullet = bulletPool2[bulletCounter];
+        GameObject bullet = bulletPool[bulletCounter];
         bulletCounter++;
         if (bulletCounter >= bulletPoolSize) bulletCounter = 0;
         bullet.transform.position = player.transform.position;

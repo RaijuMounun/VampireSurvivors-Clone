@@ -28,14 +28,9 @@ public class Minigun : BaseGun, IWeapon
 
     #region Firing Methods
 
-    new public void StartFire()
-    {
-        print("Start Fire");
-        FiringCoroutine ??= StartCoroutine(FireCoroutine());
-    }
+    public override void StartFire() => FiringCoroutine ??= StartCoroutine(FireCoroutine());
     public IEnumerator FireCoroutine()
     {
-        print("Fire");
         yield return new WaitForSeconds(spinUpTime);
         while (IsFiring)
         {
