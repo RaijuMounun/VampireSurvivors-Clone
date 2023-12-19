@@ -45,7 +45,6 @@ public class GunManager : PersistentSingleton<GunManager>
     {
         if (activeGun.IsReloading) return;
         activeGun.IsFiring = true;
-        print(activeGun.IsReloading);
         activeGun.StartFire();
     }
     public void IsFireButtonUp()

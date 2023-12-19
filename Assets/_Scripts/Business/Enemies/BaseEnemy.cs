@@ -145,7 +145,7 @@ public class BaseEnemy : Character
     IEnumerator Death()
     {
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        EnemySpawner.Instance.ReturnEnemy(gameObject);
     }
     #endregion
 }
