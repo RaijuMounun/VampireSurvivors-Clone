@@ -8,11 +8,17 @@ public class EnemySpawner : PersistentSingleton<EnemySpawner>
 
 
     PlayerMovement player;
-    public GameObject[] baseEnemyPool, alectoPool;
+    public GameObject[] baseEnemyPool, alectoPool, ctesiphonPool;
     public GameObject[][] enemyPools;
 
     public GameObject[] enemyTypes;
     public Transform[] enemyParents;
+
+
+    [Header("Enemy Spawn Counts")]
+    public int baseEnemySpawnCount;
+    public int alectoSpawnCount;
+    public int ctesiphonSpawnCount;
 
 
     public int SpawnEnemyCount => enemyPools[0].Where(x => x.activeInHierarchy).Count();
@@ -20,12 +26,14 @@ public class EnemySpawner : PersistentSingleton<EnemySpawner>
     private void Start()
     {
         enemyPools = new GameObject[enemyTypes.Length][];
-        enemyPools[0] = baseEnemyPool;
+        enemyPools[0] = baseEnemyPool; //TODO: enemyleri ekle buraya
         enemyPools[1] = alectoPool;
+        enemyPools[2] = ctesiphonPool;
         player = PlayerMovement.Instance;
         MakePool();
-        SpawnEnemy(3, 0);
-        SpawnEnemy(3, 1);
+        SpawnEnemy(baseEnemySpawnCount, 0);
+        SpawnEnemy(alectoSpawnCount, 1);
+        SpawnEnemy(ctesiphonSpawnCount, 2);
     }
 
     void MakePool()

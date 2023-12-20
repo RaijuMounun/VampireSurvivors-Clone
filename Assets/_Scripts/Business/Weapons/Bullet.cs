@@ -35,7 +35,6 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage); //TODO enemy scripti yaz
             BaseEnemy enemySc = collision.gameObject.GetComponent<BaseEnemy>();
             enemySc.TakeDamage(damage);
             BulletManager.Instance.ReturnBullet(gameObject);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -91,18 +92,14 @@ public class BaseEnemy : Character, IEnemy
 
     void Update()
     {
-        DelayUpdate(60);
+        DelayUpdate(60, Move);
     }
 
-    void DelayUpdate(int frameCount)
+    void DelayUpdate(int frameCount, Action function)
     {
-        if (counter != frameCount)
-        {
-            counter++;
-            return;
-        }
+        if (++counter % frameCount != 0) return;
 
-        Move();
+        function();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -121,6 +118,7 @@ public class BaseEnemy : Character, IEnemy
     public void Attack(Collision collision)
     {
         if (!isAlive || !collision.gameObject.CompareTag("Player")) return;
+
         // Apply knockback
         Vector3 knockbackDirection = (transform.position - player.position).normalized;
         rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
@@ -129,10 +127,13 @@ public class BaseEnemy : Character, IEnemy
         PlayerManager.Instance.TakeDamage(damage);
     }
 
+    public virtual void Attack() { }
+
 
     #region TakeDamage and Death
     public void TakeDamage(int damage)
     {
+        print(name + " took " + damage + " damage");
         health -= damage;
         CheckDeath();
     }

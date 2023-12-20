@@ -1,34 +1,54 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 public class Ctesiphon : BaseEnemy, IEnemy
 {
+
     [SerializeField] GameObject enemyBulletPrefab;
+    [SerializeField] Transform bulletParent;
     int bulletPoolSize;
-    public List<GameObject> bulletPool = new();
+    [HideInInspector] public List<GameObject> bulletPool = new();
+    int bulletCounter;
 
     SphereCollider rangeCollider;
     bool inRange;
+
+    private Coroutine firingCoroutine;
+    float attackCooldown;
 
 
 
     void Start()
     {
+        SetStats();
+
+        ObjectPooler.Instance.CreatePool(enemyBulletPrefab, bulletPoolSize, bulletParent, bulletPool);
+    }
+
+    void SetStats()
+    {
         enemyStats = EnemyStats.Instance;
         player = PlayerMovement.Instance.transform;
         rb = GetComponent<Rigidbody>();
-        health = enemyStats.alectoHealth;
-        damage = enemyStats.alectoDamage;
-        speed = enemyStats.alectoSpeed;
+
+        health = enemyStats.ctesiphonHealth;
+        damage = enemyStats.ctesiphonDamage;
+        speed = enemyStats.ctesiphonSpeed;
+
         knockbackForce = PlayerStats.Instance.KnockbackForce;
         bulletPoolSize = enemyStats.ctesiphonBulletPoolSize;
         rangeCollider = GetComponent<SphereCollider>();
         rangeCollider.radius = enemyStats.ctesiphonAttackRange;
-
-        ObjectPooler.Instance.CreatePool(enemyBulletPrefab, bulletPoolSize, transform.parent, bulletPool);
+        attackCooldown = enemyStats.ctesiphonAttackCooldown;
     }
 
+
+    void Update()
+    {
+        Move();
+        transform.LookAt(player);
+    }
 
     public override void Move()
     {
@@ -38,18 +58,40 @@ public class Ctesiphon : BaseEnemy, IEnemy
         rb.MovePosition(transform.position + speed * Time.deltaTime * direction);
     }
 
+    #region OnTrigger, OnCollision Enter-Exit
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) inRange = true;
+        if (!other.CompareTag("Player") || !isAlive) return;
+        inRange = true;
+        StartFire();
     }
-
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) inRange = false;
+        if (other.CompareTag("Player") || !isAlive) return;
+        inRange = false;
+        StopCoroutine(firingCoroutine);
     }
+    #endregion
 
-
-    //TODO ateş ettir
+    #region Attack
+    public void StartFire() => firingCoroutine ??= StartCoroutine(FireCoroutine());
+    public IEnumerator FireCoroutine()
+    {
+        while (inRange)
+        {
+            Fire();
+            yield return new WaitForSeconds(attackCooldown);
+        }
+    }
+    public void Fire()
+    {
+        GameObject bullet = bulletPool[bulletCounter];
+        bulletCounter++;
+        if (bulletCounter >= bulletPoolSize) bulletCounter = 0;
+        bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        bullet.SetActive(true);
+    }
+    #endregion
 
 
 }
