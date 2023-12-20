@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerStats : PersistentSingleton<PlayerStats>
 {
     public int Health;

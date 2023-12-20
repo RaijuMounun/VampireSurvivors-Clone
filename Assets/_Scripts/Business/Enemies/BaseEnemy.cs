@@ -73,7 +73,7 @@ public class BaseEnemy : Character, IEnemy
     public bool isAlive = true;
 
     //Movement
-    Vector3 direction;
+    public Vector3 direction;
     int counter;
 
 
@@ -110,7 +110,7 @@ public class BaseEnemy : Character, IEnemy
         Attack(collision);
     }
 
-    public void Move()
+    public virtual void Move()
     {
         if (!isAlive) return;
         // Move towards the player

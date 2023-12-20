@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,21 +9,12 @@ public class BulletManager : PersistentSingleton<BulletManager>
 
 
     PlayerMovement player;
-    public List<GameObject> bulletPool = new();
+    public List<GameObject> bulletPool = new List<GameObject>();
     int bulletCounter = 0;
 
     protected override void Awake() => base.Awake();
     private void Start() => player = PlayerMovement.Instance;
 
-    void MakePool()
-    {
-        for (int i = 0; i < bulletPoolSize; i++)
-        {
-            GameObject bullet = Instantiate(bulletPrefab, bulletParent);
-            bullet.SetActive(false);
-            bulletPool.Add(bullet);
-        }
-    }
 
     public void ReturnBullet(GameObject bullet) => bullet.SetActive(false);
 
@@ -39,7 +29,7 @@ public class BulletManager : PersistentSingleton<BulletManager>
     void IfAmmoOut()
     {
         if (bulletPool.Count > 0) return;
-        MakePool();
+        ObjectPooler.Instance.CreatePool(bulletPrefab, bulletPoolSize, bulletParent, bulletPool);
         FireBullet();
     }
 

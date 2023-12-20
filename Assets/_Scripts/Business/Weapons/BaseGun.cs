@@ -1,5 +1,3 @@
-using System.Collections;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class BaseGun : MonoBehaviour, IWeapon

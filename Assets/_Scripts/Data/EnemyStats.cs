@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStats : PersistentSingleton<EnemyStats>
@@ -16,6 +14,16 @@ public class EnemyStats : PersistentSingleton<EnemyStats>
     public int alectoDamage = 10;
     public int alectoSpeed = 5;
     public float alectoKnockbackForce = 10f;
+
+
+    [Header("Ctesiphon Stats")]
+    public int ctesiphonHealth = 100;
+    public int ctesiphonDamage = 10;
+    public int ctesiphonSpeed = 5;
+    public float ctesiphonKnockbackForce = 10f;
+    public float ctesiphonAttackRange = 5f;
+    public float ctesiphonAttackCooldown = 1f;
+    public int ctesiphonBulletPoolSize = 20;
 
 
 }
