@@ -70,6 +70,7 @@ public class Ctesiphon : BaseEnemy, IEnemy
         if (other.CompareTag("Player") || !isAlive) return;
         inRange = false;
         StopCoroutine(firingCoroutine);
+        //firingCoroutine = null;
     }
     #endregion
 

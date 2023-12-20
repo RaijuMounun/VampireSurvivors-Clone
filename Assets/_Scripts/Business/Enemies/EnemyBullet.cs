@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
@@ -7,18 +8,30 @@ public class EnemyBullet : MonoBehaviour
     public int damage;
     public float speed;
 
-    PlayerManager player;
+    Transform parent;
 
-    private void Start() => player = PlayerManager.Instance;
+    public PlayerManager player;
 
-    private void OnEnable() => StartCoroutine(DisableAfterDelay());
+
+    private void OnEnable()
+    {
+        parent = transform.parent;
+        transform.parent = null;
+        StartCoroutine(DisableAfterDelay());
+        player = PlayerManager.Instance;
+        transform.LookAt(player.transform);
+    }
 
     IEnumerator DisableAfterDelay()
     {
         yield return new WaitForSeconds(lifeTime);
         gameObject.SetActive(false);
     }
-    private void OnDisable() => StopAllCoroutines();
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        transform.parent = parent;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -28,5 +41,5 @@ public class EnemyBullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward, Space.World);
+    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward);
 }
