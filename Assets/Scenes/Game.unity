@@ -185,7 +185,7 @@ MonoBehaviour:
   - {fileID: 602237623}
   baseEnemySpawnCount: 0
   alectoSpawnCount: 0
-  ctesiphonSpawnCount: 0
+  ctesiphonSpawnCount: 1
 --- !u!1 &85896427
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +218,7 @@ Transform:
   - {fileID: 1861018793}
   - {fileID: 1406927866}
   - {fileID: 66086201}
+  - {fileID: 1589826219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &172444877
@@ -648,6 +649,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2215946742470300140, guid: 60a40326b11ce7a49acfe84ac8d3b632,
+        type: 3}
+      propertyPath: mousePosObj
+      value: 
+      objectReference: {fileID: 766908297}
     - target: {fileID: 3805623069033152605, guid: 60a40326b11ce7a49acfe84ac8d3b632,
         type: 3}
       propertyPath: range
@@ -842,6 +848,37 @@ Transform:
   m_Children:
   - {fileID: 1292494275}
   - {fileID: 1550561661}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &766908296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766908297}
+  m_Layer: 0
+  m_Name: MousePosObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &766908297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766908296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.2041726, y: 5.6230016, z: 2.179124}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
@@ -1191,19 +1228,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 100
   baseDamage: 10
-  baseSpeed: 15
+  baseSpeed: 5
   baseKnockbackForce: 10
   alectoHealth: 100
   alectoDamage: 10
-  alectoSpeed: 10
+  alectoSpeed: 5
   alectoKnockbackForce: 10
   ctesiphonHealth: 100
   ctesiphonDamage: 10
-  ctesiphonSpeed: 5
+  ctesiphonSpeed: 11
   ctesiphonKnockbackForce: 10
   ctesiphonAttackRange: 30
   ctesiphonAttackCooldown: 1
-  ctesiphonBulletPoolSize: 20
 --- !u!114 &1567786469 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3805623069033152605, guid: 60a40326b11ce7a49acfe84ac8d3b632,
@@ -1216,6 +1252,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0bea16c2ab1484448f0c9ffcf2fead2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1589826218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1589826219}
+  - component: {fileID: 1589826220}
+  m_Layer: 0
+  m_Name: EnemyBulletManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1589826219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589826218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 85896428}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1589826220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589826218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86de609a48678004382da772ffdae7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBulletPoolSize: 100
+  enemyBulletPrefab: {fileID: 2075846882986367887, guid: d6f542759309b0242a1a0af54427eeef,
+    type: 3}
+  bulletParent: {fileID: 1589826219}
+  bulletPool: []
 --- !u!1 &1861018792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,85 +1520,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4d022636a76c03448ec473d7f14a771, type: 3}
---- !u!1001 &8207017367323627067
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1182411022398347532, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_Name
-      value: Ctesiphon
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 15.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 25.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514049487040041430, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4953763503559805631, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: bulletParent
-      value: 
-      objectReference: {fileID: 1038929625}
-    - target: {fileID: 4953763503559805631, guid: 14825fc713b5bbd48b92d556d6ef43b9,
-        type: 3}
-      propertyPath: enemyBulletPrefab
-      value: 
-      objectReference: {fileID: 2075846882986367887, guid: d6f542759309b0242a1a0af54427eeef,
-        type: 3}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 14825fc713b5bbd48b92d556d6ef43b9, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1528,5 +1534,5 @@ SceneRoots:
   - {fileID: 626984227}
   - {fileID: 85896428}
   - {fileID: 474801953}
-  - {fileID: 8207017367323627067}
   - {fileID: 872763121624308113}
+  - {fileID: 766908297}

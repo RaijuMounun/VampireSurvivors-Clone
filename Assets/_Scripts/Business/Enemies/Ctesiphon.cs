@@ -1,46 +1,33 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ctesiphon : BaseEnemy, IEnemy
 {
-
-    [SerializeField] GameObject enemyBulletPrefab;
-    [SerializeField] Transform bulletParent;
-    int bulletPoolSize;
-    [HideInInspector] public List<GameObject> bulletPool = new();
-    int bulletCounter;
-
     SphereCollider rangeCollider;
     bool inRange;
 
     private Coroutine firingCoroutine;
-    float attackCooldown;
+    [SerializeField] float attackCooldown;
 
 
 
-    void Start()
+    protected override void Start()
     {
+        rangeCollider = GetComponent<SphereCollider>();
+        player = PlayerMovement.Instance.transform;
+        rb = GetComponent<Rigidbody>();
         SetStats();
-
-        ObjectPooler.Instance.CreatePool(enemyBulletPrefab, bulletPoolSize, bulletParent, bulletPool);
     }
+
 
     void SetStats()
     {
-        enemyStats = EnemyStats.Instance;
-        player = PlayerMovement.Instance.transform;
-        rb = GetComponent<Rigidbody>();
-
-        health = enemyStats.ctesiphonHealth;
-        damage = enemyStats.ctesiphonDamage;
-        speed = enemyStats.ctesiphonSpeed;
-
-        knockbackForce = PlayerStats.Instance.KnockbackForce;
-        bulletPoolSize = enemyStats.ctesiphonBulletPoolSize;
-        rangeCollider = GetComponent<SphereCollider>();
-        rangeCollider.radius = enemyStats.ctesiphonAttackRange;
-        attackCooldown = enemyStats.ctesiphonAttackCooldown;
+        health = EnemyStats.Instance.ctesiphonHealth;
+        damage = EnemyStats.Instance.ctesiphonDamage;
+        speed = EnemyStats.Instance.ctesiphonSpeed;
+        knockbackForce = EnemyStats.Instance.ctesiphonKnockbackForce;
+        rangeCollider.radius = EnemyStats.Instance.ctesiphonAttackRange;
+        attackCooldown = EnemyStats.Instance.ctesiphonAttackCooldown;
     }
 
 
@@ -53,7 +40,6 @@ public class Ctesiphon : BaseEnemy, IEnemy
     public override void Move()
     {
         if (!isAlive || inRange) return;
-        // Move towards the player
         direction = (player.position - transform.position).normalized;
         rb.MovePosition(transform.position + speed * Time.deltaTime * direction);
     }
@@ -86,10 +72,9 @@ public class Ctesiphon : BaseEnemy, IEnemy
     }
     public void Fire()
     {
-        GameObject bullet = bulletPool[bulletCounter];
-        bulletCounter++;
-        if (bulletCounter >= bulletPoolSize) bulletCounter = 0;
+        GameObject bullet = EnemyBulletManager.Instance.SelectBullet();
         bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        bullet.GetComponent<EnemyBullet>().fired = true;
         bullet.SetActive(true);
     }
     #endregion

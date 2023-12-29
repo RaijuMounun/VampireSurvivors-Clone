@@ -4,19 +4,14 @@ public class PlayerMovement : PersistentSingleton<PlayerMovement>
 {
     public int Speed { get; set; }
 
-    float moveHorizontal;
-    float moveVertical;
+    float moveHorizontal, moveVertical;
     Vector3 movement;
-
-
+    public Transform mousePosObj;
     Vector3 mousePos;
     public Vector3 worldPos;
 
 
-    private void Start()
-    {
-        Speed = PlayerStats.Instance.Speed;
-    }
+    private void Start() => Speed = PlayerStats.Instance.Speed;
 
     void Update()
     {
@@ -32,15 +27,9 @@ public class PlayerMovement : PersistentSingleton<PlayerMovement>
         moveVertical = Input.GetAxis("Vertical");
     }
 
-    void SetMovement()
-    {
-        movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-    }
+    void SetMovement() => movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-    void Move()
-    {
-        transform.position += Speed * Time.deltaTime * movement;
-    }
+    void Move() => transform.position += Speed * Time.deltaTime * movement;
 
     void Rotate()
     {
@@ -49,5 +38,6 @@ public class PlayerMovement : PersistentSingleton<PlayerMovement>
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         worldPos.y = transform.position.y;
         transform.LookAt(worldPos);
+        mousePosObj.position = new Vector3(worldPos.x, transform.position.y, worldPos.z);
     }
 }

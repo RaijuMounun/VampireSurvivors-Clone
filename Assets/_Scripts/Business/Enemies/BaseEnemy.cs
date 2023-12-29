@@ -62,15 +62,14 @@ Mammon: evil genies – tempters and ensnarers
 
 public class BaseEnemy : Character, IEnemy
 {
-    public EnemyStats enemyStats;
-    public Transform player;
-    public Rigidbody rb;
+    [HideInInspector] public Transform player;
+    [HideInInspector] public Rigidbody rb;
 
     [Header("Enemy Stats")]
     public int health;
-    public int damage;
-    public float speed;
-    public float knockbackForce;
+    [HideInInspector] public int damage;
+    [HideInInspector] public float speed;
+    [HideInInspector] public float knockbackForce;
     public bool isAlive = true;
 
     //Movement
@@ -79,15 +78,11 @@ public class BaseEnemy : Character, IEnemy
 
 
 
-    void Start()
+    protected virtual void Start()
     {
-        enemyStats = EnemyStats.Instance;
         player = PlayerMovement.Instance.transform;
         rb = GetComponent<Rigidbody>();
-        health = enemyStats.baseHealth;
-        damage = enemyStats.baseDamage;
-        speed = enemyStats.baseSpeed;
-        knockbackForce = PlayerStats.Instance.KnockbackForce;
+        SetStats();
     }
 
     void Update()
@@ -100,6 +95,15 @@ public class BaseEnemy : Character, IEnemy
         if (++counter % frameCount != 0) return;
 
         function();
+    }
+
+
+    void SetStats()
+    {
+        health = EnemyStats.Instance.baseHealth;
+        damage = EnemyStats.Instance.baseDamage;
+        speed = EnemyStats.Instance.baseSpeed;
+        knockbackForce = EnemyStats.Instance.baseKnockbackForce;
     }
 
     private void OnCollisionEnter(Collision collision)

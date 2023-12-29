@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public float lifeTime;
     public int damage;
     public float speed;
+    public Transform parent;
+    Vector3 direction;
 
 
 
@@ -18,14 +20,16 @@ public class Bullet : MonoBehaviour
         lifeTime = gun.BulletLifeTime;
         damage = gun.Damage;
         speed = gun.BulletSpeed;
+        parent = BulletManager.Instance.bulletParent;
+        direction = (PlayerMovement.Instance.gameObject.transform.position - PlayerMovement.Instance.mousePosObj.position).normalized;
 
         StartCoroutine(DisableAfterDelay());
-
     }
 
     IEnumerator DisableAfterDelay()
     {
         yield return new WaitForSeconds(lifeTime);
+        transform.SetParent(parent);
         BulletManager.Instance.ReturnBullet(gameObject);
     }
 
@@ -37,10 +41,13 @@ public class Bullet : MonoBehaviour
         {
             BaseEnemy enemySc = collision.gameObject.GetComponent<BaseEnemy>();
             enemySc.TakeDamage(damage);
+            transform.SetParent(parent);
             BulletManager.Instance.ReturnBullet(gameObject);
         }
     }
 
-    private void FixedUpdate() => transform.Translate(speed * Time.fixedDeltaTime * transform.forward, Space.World);
-
+    private void FixedUpdate()
+    {
+        transform.Translate(speed * Time.fixedDeltaTime * direction);
+    }
 }

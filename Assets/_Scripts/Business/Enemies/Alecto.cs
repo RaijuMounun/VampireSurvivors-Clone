@@ -3,15 +3,19 @@ using UnityEngine;
 public class Alecto : BaseEnemy, IEnemy
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        enemyStats = EnemyStats.Instance;
         player = PlayerMovement.Instance.transform;
         rb = GetComponent<Rigidbody>();
-        health = enemyStats.alectoHealth;
-        damage = enemyStats.alectoDamage;
-        speed = enemyStats.alectoSpeed;
-        knockbackForce = PlayerStats.Instance.KnockbackForce;
+        SetStats();
+    }
+
+    void SetStats()
+    {
+        health = EnemyStats.Instance.alectoHealth;
+        damage = EnemyStats.Instance.alectoDamage;
+        speed = EnemyStats.Instance.alectoSpeed;
+        knockbackForce = EnemyStats.Instance.alectoKnockbackForce;
     }
 
 }

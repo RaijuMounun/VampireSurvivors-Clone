@@ -9,15 +9,11 @@ public class Minigun : BaseGun, IWeapon
     private Coroutine firingCoroutine;
 
 
-
     [Header("Minigun Stats")]
-    [SerializeField] float spinUpTime = 2f;
-
-
-    //This area is for serializing fields to control from the inspector
-    [SerializeField] int damage = 10, currentAmmo = 100, maxAmmo = 100;
-    [SerializeField] float range = 20f, fireRate = 0.2f, reloadTime = 2f, bulletSpeed = 2f;
-    [SerializeField] bool isReloading, isFiring, isEquipped, isBought;
+    public float spinUpTime = 2f;
+    public int damage = 10, currentAmmo = 100, maxAmmo = 100;
+    public float range = 20f, fireRate = 0.2f, reloadTime = 2f, bulletSpeed = 2f;
+    public bool isReloading, isFiring, isEquipped, isBought;
 
 
     private void Start()
@@ -27,19 +23,19 @@ public class Minigun : BaseGun, IWeapon
 
 
     #region Firing Methods
-
     public override void StartFire() => FiringCoroutine ??= StartCoroutine(FireCoroutine());
+
     public IEnumerator FireCoroutine()
     {
         yield return new WaitForSeconds(spinUpTime);
         while (IsFiring)
         {
-            FireAfterDelay();
+            Fire();
             yield return new WaitForSeconds(FireRate);
         }
     }
 
-    public void FireAfterDelay()
+    public void Fire()
     {
         if (currentAmmo <= 0)
         {
@@ -50,8 +46,6 @@ public class Minigun : BaseGun, IWeapon
         BulletManager.Instance.FireBullet();
     }
     #endregion
-
-
 
 
 }

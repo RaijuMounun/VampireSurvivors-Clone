@@ -4,7 +4,7 @@ using UnityEngine;
 public class BulletManager : PersistentSingleton<BulletManager>
 {
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Transform bulletParent;
+    public Transform bulletParent;
     [SerializeField] int bulletPoolSize = 20;
 
 
@@ -39,8 +39,8 @@ public class BulletManager : PersistentSingleton<BulletManager>
         GameObject bullet = bulletPool[bulletCounter];
         bulletCounter++;
         if (bulletCounter >= bulletPoolSize) bulletCounter = 0;
+        bullet.transform.SetParent(null);
         bullet.transform.position = player.transform.position;
-        bullet.transform.localRotation = player.transform.rotation;
         bullet.SetActive(true);
     }
 
