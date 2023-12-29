@@ -13,13 +13,9 @@ public class Character : MonoBehaviour
     {
         Health = playerStats.Health;
         Damage = playerStats.Damage;
-
     }
-    void Start()
-    {
-        IsAlive = true;
-    }
-
+    
+    void Start() => IsAlive = true;
 
     public void CheckDeath()
     {
@@ -28,8 +24,5 @@ public class Character : MonoBehaviour
         Death();
     }
 
-    void Death()
-    {
-        Destroy(gameObject);
-    }
+    void Death() => Destroy(gameObject);
 }
